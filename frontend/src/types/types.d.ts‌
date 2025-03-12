@@ -1,0 +1,15 @@
+// src/types/types.d.ts
+declare interface Task {
+  id: string;
+  fileName: string;
+  progress: number;
+  status: 'uploading' | 'processing' | 'completed' | 'error';
+  modelUrl?: string;
+  timestamp: number;
+}
+
+declare interface UploadProgress {
+  loaded: number;
+  total: number;
+  percentage: number;
+}
