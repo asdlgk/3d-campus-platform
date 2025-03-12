@@ -1,0 +1,20 @@
+import axios from 'axios';
+
+type UploadResponse = {
+  taskId: string;
+  modelUrl: string;
+};
+
+export const apiClient = axios.create({
+  baseURL: '/api',
+  timeout: 10000,
+});
+
+export const fetchTask = async (taskId: string) => {
+  const { data } = await apiClient.get<Task>(`/tasks/${taskId}`);
+  return data;
+};
+
+export const deleteTask = async (taskId: string) => {
+  await apiClient.delete(`/tasks/${taskId}`);
+};
