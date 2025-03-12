@@ -1,0 +1,42 @@
+{
+  "name": "3d-campus-frontend",
+  "version": "1.0.0",
+  "dependencies": {
+    "@ant-design/icons": "^5.2.1",
+    "@babylonjs/core": "^6.21.0",
+    "@babylonjs/loaders": "^6.21.0",
+    "antd": "^5.12.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.1",
+    "dayjs": "^1.11.10",
+    "zustand": "^4.4.5",
+    "websocket": "^1.0.34"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.2.2",
+    "craco": "^7.1.0",
+    "@craco/craco": "^7.1.0",
+    "react-scripts": "^5.0.1"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
