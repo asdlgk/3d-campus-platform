@@ -1,16 +1,24 @@
-import { useEffect, useCallback } from 'react';
+// src/utils/websocket.ts
+import { useTaskStore } from '../store/taskStore';
 
-const useWebSocket = (url: string, onMessage: (data: any) => void) => {
-  useEffect(() => {
-    const ws = new WebSocket(url);
+export const initWebSocket = () => {
+  const ws = new WebSocket('wss://your-api-domain.com/ws');
+  
+  ws.onmessage = (event) => {
+    const message: WebSocketMessage = JSON.parse(event.data);
+    switch (message.type) {
+      case 'statusUpdate':
+        useTaskStore.getState().updateTask(message.data.taskId, {
+          status: message.data.status
+        });
+        break;
+      case 'progressUpdate':
+        useTaskStore.getState().updateTask(message.data.taskId, {
+          progress: message.data.progress
+        });
+        break;
+    }
+  };
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      onMessage(data);
-    };
-
-    return () => ws.close();
-  }, [url, onMessage]);
+  return ws;
 };
-
-export default useWebSocket;
