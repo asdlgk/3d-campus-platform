@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Tag } from 'antd';
 import useTaskStatus from '../../../hooks/useTaskStatus';
 import ProgressBar from './ProgressBar';
+import type { TaskItem } from '../../../types/types';
 
 const TaskStatus: React.FC = () => {
   const { tasks } = useTaskStatus();
@@ -13,11 +14,16 @@ const TaskStatus: React.FC = () => {
       key: 'taskId',
     },
     {
+      title: '文件名',
+      dataIndex: 'fileName',
+      key: 'fileName',
+    },
+    {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
-      render: (status: string) => (
-        <Tag color={status === 'completed' ? 'green' : 'blue'}>
+      render: (status: TaskItem['status']) => (
+        <Tag color={status === 'completed' ? 'green' : 'processing'}>
           {status.toUpperCase()}
         </Tag>
       ),
@@ -32,6 +38,7 @@ const TaskStatus: React.FC = () => {
       title: '创建时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      render: (date: string) => new Date(date).toLocaleString(),
     },
   ];
 
@@ -42,6 +49,7 @@ const TaskStatus: React.FC = () => {
         columns={columns}
         rowKey="taskId"
         pagination={false}
+        bordered
       />
     </div>
   );
