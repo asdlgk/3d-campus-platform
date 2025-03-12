@@ -1,0 +1,47 @@
+// src/utils/websocket.ts
+export class TaskWebSocket {
+  private socket: WebSocket | null = null;
+  private retries = 0;
+  private maxRetries = 3;
+
+  constructor(
+    private url: string,
+    private onMessage: (data: Task) => void,
+    private onError?: (error: Event) => void
+  ) {
+    this.connect();
+  }
+
+  private connect() {
+    this.socket = new WebSocket(this.url);
+    
+    this.socket.onmessage = (event) => {
+      try {
+        const taskData: Task = JSON.parse(event.data);
+        this.onMessage(taskData);
+      } catch (error) {
+        console.error('WebSocket message parse error:', error);
+      }
+    };
+
+    this.socket.onerror = (error) => {
+      this.onError?.(error);
+      this.reconnect();
+    };
+
+    this.socket.onclose = () => this.reconnect();
+  }
+
+  private reconnect() {
+    if (this.retries < this.maxRetries) {
+      setTimeout(() => {
+        this.retries++;
+        this.connect();
+      }, 3000 * this.retries);
+    }
+  }
+
+  public close() {
+    this.socket?.close();
+  }
+}
